@@ -11,6 +11,7 @@ function Categories() {
         {categories.map((elem, index) => {
           return (
             <li
+              key={index} // can be used index if array is static
               className={activeIndex === index ? 'active' : ''}
               onClick={() => setActiveIndex(index)}>
               {elem}
