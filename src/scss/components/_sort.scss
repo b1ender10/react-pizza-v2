@@ -21,6 +21,13 @@
     }
   }
 
+  &__icon {
+    cursor: pointer;
+    &-desc {
+      transform: rotate(180deg);
+    }
+  }
+
   &__popup {
     position: absolute;
     right: 0;

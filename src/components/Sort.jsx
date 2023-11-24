@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Sort(params) {
+function Sort({ sortSelected, setterSortSelected, sortOrder, setterSortOrder }) {
   const [isSortVisible, setIsSortVisible] = React.useState(false);
 
   // const list = ['популярности', 'цене', 'алфавиту'];
@@ -12,7 +12,7 @@ function Sort(params) {
   ];
 
   const onClickListItem = (val) => {
-    params.setter(val);
+    setterSortSelected(val);
     setIsSortVisible(false);
   };
 
@@ -20,6 +20,12 @@ function Sort(params) {
     <div className="sort">
       <div className="sort__label">
         <svg
+          className={sortOrder === 'asc' ? 'sort__icon' : 'sort__icon sort__icon-desc'}
+          onClick={() => {
+            setterSortOrder((prev) => {
+              return prev === 'asc' ? 'desc' : 'asc';
+            });
+          }}
           width="10"
           height="6"
           viewBox="0 0 10 6"
@@ -31,7 +37,7 @@ function Sort(params) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsSortVisible((prev) => !prev)}>{params.value.name}</span>
+        <span onClick={() => setIsSortVisible((prev) => !prev)}>{sortSelected.name}</span>
       </div>
 
       {isSortVisible && (
@@ -43,7 +49,7 @@ function Sort(params) {
                   onClick={() => {
                     onClickListItem(obj);
                   }}
-                  className={params.value.sortProperty === obj.sortProperty ? 'active' : ''}>
+                  className={sortSelected.sortProperty === obj.sortProperty ? 'active' : ''}>
                   {obj.name}
                 </li>
               );

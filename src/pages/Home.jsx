@@ -15,12 +15,15 @@ const Home = () => {
     sortProperty: 'rating',
   });
 
+  const [sortOrder, setSortOrder] = useState('asc');
+
   React.useEffect(() => {
     setIsLoading(true);
+
+    const category = categorySelected > 0 ? `category=${categorySelected}` : '';
+
     fetch(
-      `https://6548a9a8dd8ebcd4ab23590d.mockapi.io/items?${
-        categorySelected > 0 ? `category=${categorySelected}` : ''
-      }&sortBy=${sortSelected.sortProperty}&order=desc`,
+      `https://6548a9a8dd8ebcd4ab23590d.mockapi.io/items?${category}&sortBy=${sortSelected.sortProperty}&order=${sortOrder}`,
     )
       .then((res) => {
         return res.json();
@@ -30,42 +33,18 @@ const Home = () => {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categorySelected, sortSelected]);
-
-  // React.useEffect(() => {
-  //   let url = new URL('https://6548a9a8dd8ebcd4ab23590d.mockapi.io/items');
-
-  //   if (categorySelected > 0) {
-  //     url.searchParams.append('category', categorySelected);
-  //   }
-
-  //   if (sortSelected === 0) {
-  //     url.searchParams.append('sortBy', 'rating');
-  //   }
-
-  //   if (sortSelected === 1) {
-  //     url.searchParams.append('sortBy', 'price');
-  //   }
-
-  //   if (sortSelected === 2) {
-  //     url.searchParams.append('sortBy', 'title');
-  //   }
-
-  //   fetch(url)
-  //     .then((res) => {
-  //       return res.json();
-  //     })
-  //     .then((json) => {
-  //       setItems(json);
-  //       setIsLoading(false);
-  //     });
-  // }, [categorySelected, sortSelected]);
+  }, [categorySelected, sortSelected, sortOrder]);
 
   return (
     <div className="container">
       <div className="content__top">
         <Categories value={categorySelected} setter={setCategorySelected} />
-        <Sort value={sortSelected} setter={setSortSelected} />
+        <Sort
+          sortSelected={sortSelected}
+          setterSortSelected={setSortSelected}
+          sortOrder={sortOrder}
+          setterSortOrder={setSortOrder}
+        />
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">
