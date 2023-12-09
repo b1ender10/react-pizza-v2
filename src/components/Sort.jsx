@@ -1,9 +1,13 @@
 import React from 'react';
 
-function Sort({ sortSelected, setterSortSelected, sortOrder, setterSortOrder }) {
-  const [isSortVisible, setIsSortVisible] = React.useState(false);
+import { useSelector, useDispatch } from 'react-redux';
+import { changeSortSelected, changeSortOrder } from '../redux/sort/sortSlice';
 
-  // const list = ['популярности', 'цене', 'алфавиту'];
+function Sort() {
+  const selector = useSelector((state) => state.sort);
+  const dispatch = useDispatch();
+
+  const [isSortVisible, setIsSortVisible] = React.useState(false);
 
   const list = [
     { name: 'популярности', sortProperty: 'rating' },
@@ -12,7 +16,7 @@ function Sort({ sortSelected, setterSortSelected, sortOrder, setterSortOrder }) 
   ];
 
   const onClickListItem = (val) => {
-    setterSortSelected(val);
+    dispatch(changeSortSelected(val));
     setIsSortVisible(false);
   };
 
@@ -20,11 +24,10 @@ function Sort({ sortSelected, setterSortSelected, sortOrder, setterSortOrder }) 
     <div className="sort">
       <div className="sort__label">
         <svg
-          className={sortOrder === 'asc' ? 'sort__icon' : 'sort__icon sort__icon-desc'}
+          className={selector.sortOrder === 'asc' ? 'sort__icon' : 'sort__icon sort__icon-desc'}
           onClick={() => {
-            setterSortOrder((prev) => {
-              return prev === 'asc' ? 'desc' : 'asc';
-            });
+            const tempOrder = selector.sortOrder === 'asc' ? 'desc' : 'asc';
+            dispatch(changeSortOrder(tempOrder));
           }}
           width="10"
           height="6"
@@ -37,7 +40,7 @@ function Sort({ sortSelected, setterSortSelected, sortOrder, setterSortOrder }) 
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsSortVisible((prev) => !prev)}>{sortSelected.name}</span>
+        <span onClick={() => setIsSortVisible((prev) => !prev)}>{selector.sortSelected.name}</span>
       </div>
 
       {isSortVisible && (
@@ -49,7 +52,9 @@ function Sort({ sortSelected, setterSortSelected, sortOrder, setterSortOrder }) 
                   onClick={() => {
                     onClickListItem(obj);
                   }}
-                  className={sortSelected.sortProperty === obj.sortProperty ? 'active' : ''}>
+                  className={
+                    selector.sortSelected.sortProperty === obj.sortProperty ? 'active' : ''
+                  }>
                   {obj.name}
                 </li>
               );
