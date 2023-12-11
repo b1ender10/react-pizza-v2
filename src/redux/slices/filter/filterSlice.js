@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const sortSlice = createSlice({
-  name: 'sort',
+export const filterSlice = createSlice({
+  name: 'filter',
   initialState: {
     searchValue: '',
     categorySelected: 0,
@@ -29,6 +29,6 @@ export const sortSlice = createSlice({
 
 // Action creators are generated for each case reducer function
 export const { changeSearchValue, changeCategorySelected, changeSortSelected, changeSortOrder } =
-  sortSlice.actions;
+filterSlice.actions;
 
-export default sortSlice.reducer;
+export default filterSlice.reducer;

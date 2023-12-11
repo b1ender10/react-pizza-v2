@@ -1,12 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeCategorySelected } from '../redux/sort/sortSlice';
+
+import { changeCategorySelected } from '../redux/slices/filter/filterSlice';
+
+const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
 
 function Categories() {
-  const categories = ['Все', 'Мясные', 'Вегетарианская', 'Гриль', 'Острые', 'Закрытые'];
-
-  const selector = useSelector((state) => state.sort);
-
+  const { categorySelected } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
   return (
@@ -16,7 +16,7 @@ function Categories() {
           return (
             <li
               key={index} // can be used index if array is static
-              className={selector.categorySelected === index ? 'active' : ''}
+              className={categorySelected === index ? 'active' : ''}
               onClick={() => {
                 dispatch(changeCategorySelected(index));
               }}>

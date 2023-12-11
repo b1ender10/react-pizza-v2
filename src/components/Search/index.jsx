@@ -2,10 +2,10 @@ import React from 'react';
 
 import styles from './Search.module.scss';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeSearchValue } from '../../redux/sort/sortSlice';
+import { changeSearchValue } from '../../redux/slices/filter/filterSlice';
 
 export const Search = () => {
-  const selector = useSelector((state) => state.sort);
+  const selector = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
   return (

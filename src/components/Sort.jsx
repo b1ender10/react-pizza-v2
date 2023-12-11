@@ -1,19 +1,18 @@
 import React from 'react';
-
 import { useSelector, useDispatch } from 'react-redux';
-import { changeSortSelected, changeSortOrder } from '../redux/sort/sortSlice';
+
+import { changeSortSelected, changeSortOrder } from '../redux/slices/filter/filterSlice';
+
+const list = [
+  { name: 'популярности', sortProperty: 'rating' },
+  { name: 'цене', sortProperty: 'price' },
+  { name: 'алфавиту', sortProperty: 'title' },
+];
 
 function Sort() {
-  const selector = useSelector((state) => state.sort);
+  const { sortOrder, sortSelected } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
-
   const [isSortVisible, setIsSortVisible] = React.useState(false);
-
-  const list = [
-    { name: 'популярности', sortProperty: 'rating' },
-    { name: 'цене', sortProperty: 'price' },
-    { name: 'алфавиту', sortProperty: 'title' },
-  ];
 
   const onClickListItem = (val) => {
     dispatch(changeSortSelected(val));
@@ -24,9 +23,9 @@ function Sort() {
     <div className="sort">
       <div className="sort__label">
         <svg
-          className={selector.sortOrder === 'asc' ? 'sort__icon' : 'sort__icon sort__icon-desc'}
+          className={sortOrder === 'asc' ? 'sort__icon' : 'sort__icon sort__icon-desc'}
           onClick={() => {
-            const tempOrder = selector.sortOrder === 'asc' ? 'desc' : 'asc';
+            const tempOrder = sortOrder === 'asc' ? 'desc' : 'asc';
             dispatch(changeSortOrder(tempOrder));
           }}
           width="10"
@@ -40,7 +39,7 @@ function Sort() {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setIsSortVisible((prev) => !prev)}>{selector.sortSelected.name}</span>
+        <span onClick={() => setIsSortVisible((prev) => !prev)}>{sortSelected.name}</span>
       </div>
 
       {isSortVisible && (
@@ -52,9 +51,7 @@ function Sort() {
                   onClick={() => {
                     onClickListItem(obj);
                   }}
-                  className={
-                    selector.sortSelected.sortProperty === obj.sortProperty ? 'active' : ''
-                  }>
+                  className={sortSelected.sortProperty === obj.sortProperty ? 'active' : ''}>
                   {obj.name}
                 </li>
               );
