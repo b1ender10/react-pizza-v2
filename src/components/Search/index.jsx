@@ -1,12 +1,41 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import styles from './Search.module.scss';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { changeSearchValue } from '../../redux/slices/filter/filterSlice';
 
+const debounce = (fn, t) => {
+  let timer;
+  return function (...args) {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), t);
+  };
+};
+
 export const Search = () => {
-  const selector = useSelector((state) => state.filter);
+  const [value, setValue] = React.useState('');
+
   const dispatch = useDispatch();
+
+  const inputRef = useRef();
+
+  const updateSearchValue = React.useCallback(
+    debounce((str) => {
+      dispatch(changeSearchValue(str));
+    }, 350),
+    [],
+  );
+
+  const onChangeInput = (event) => {
+    setValue(event.target.value);
+    updateSearchValue(event.target.value);
+  };
+
+  const deleteSearchValue = () => {
+    dispatch(changeSearchValue(''));
+    setValue('');
+    inputRef.current.focus();
+  };
 
   return (
     <div className={styles.root}>
@@ -18,16 +47,17 @@ export const Search = () => {
       </svg>
 
       <input
-        value={selector.searchValue}
-        onChange={(ev) => dispatch(changeSearchValue(ev.target.value))}
+        ref={inputRef}
+        value={value}
+        onChange={onChangeInput}
         className={styles.input}
         placeholder="Поиск пиццы..."
       />
 
-      {selector.searchValue && (
+      {value && (
         <svg
           className={styles.icon__cross}
-          onClick={() => dispatch(changeSearchValue(''))}
+          onClick={deleteSearchValue}
           xmlns="http://www.w3.org/2000/svg"
           width="800px"
           height="800px"

@@ -10,6 +10,7 @@ export const filterSlice = createSlice({
       sortProperty: 'rating',
     },
     sortOrder: 'asc',
+    currentPage: 1,
   },
   reducers: {
     changeSearchValue: (state, action) => {
@@ -24,11 +25,19 @@ export const filterSlice = createSlice({
     changeSortOrder: (state, action) => {
       state.sortOrder = action.payload;
     },
+    changeCurrentPage: (state, action) => {
+      state.currentPage = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { changeSearchValue, changeCategorySelected, changeSortSelected, changeSortOrder } =
-filterSlice.actions;
+export const {
+  changeSearchValue,
+  changeCategorySelected,
+  changeSortSelected,
+  changeSortOrder,
+  changeCurrentPage,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;

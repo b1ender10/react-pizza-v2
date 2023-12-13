@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import axios from 'axios';
 import { useSelector } from 'react-redux';
 
 import Categories from '../components/Categories';
@@ -8,13 +9,12 @@ import Skeleton from '../components/PizzaBlock/Skeleton';
 import { Pagination } from '../components/Pagination';
 
 const Home = () => {
-  const { categorySelected, searchValue, sortSelected, sortOrder } = useSelector(
+  const { categorySelected, searchValue, sortSelected, sortOrder, currentPage } = useSelector(
     (state) => state.filter,
   );
 
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [currentPage, setCurentPage] = useState(1);
 
   React.useEffect(() => {
     setIsLoading(true);
@@ -22,16 +22,15 @@ const Home = () => {
     const category = categorySelected > 0 ? `category=${categorySelected}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
 
-    fetch(
-      `https://6548a9a8dd8ebcd4ab23590d.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortSelected.sortProperty}&order=${sortOrder}${search}`,
-    )
+    axios
+      .get(
+        `https://6548a9a8dd8ebcd4ab23590d.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortSelected.sortProperty}&order=${sortOrder}${search}`,
+      )
       .then((res) => {
-        return res.json();
-      })
-      .then((json) => {
-        setItems(json);
+        setItems(res.data);
         setIsLoading(false);
       });
+
     window.scrollTo(0, 0);
   }, [categorySelected, sortSelected, sortOrder, searchValue, currentPage]);
 
@@ -46,7 +45,7 @@ const Home = () => {
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? skeletons : pizzas}</div>
-      <Pagination setCurentPage={setCurentPage} />
+      <Pagination />
     </div>
   );
 };
