@@ -28,6 +28,12 @@ export const filterSlice = createSlice({
     changeCurrentPage: (state, action) => {
       state.currentPage = action.payload;
     },
+    setFilters: (state, action) => {
+      state.sortSelected = action.payload.sort;
+      state.sortOrder = action.payload.sortOrder;
+      state.categorySelected = Number(action.payload.categorySelected);
+      state.currentPage = Number(action.payload.currentPage);
+    },
   },
 });
 
@@ -38,6 +44,7 @@ export const {
   changeSortSelected,
   changeSortOrder,
   changeCurrentPage,
+  setFilters,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;
