@@ -10,17 +10,37 @@ export const sortList = [
 ];
 
 function Sort() {
-  const { sortOrder, sortSelected } = useSelector((state) => state.filter);
   const dispatch = useDispatch();
+  const sortRef = React.useRef(null);
+  const { sortOrder, sortSelected } = useSelector((state) => state.filter);
   const [isSortVisible, setIsSortVisible] = React.useState(false);
+  
 
   const onClickListItem = (val) => {
     dispatch(changeSortSelected(val));
     setIsSortVisible(false);
   };
 
+  React.useEffect(() => {
+
+    //mount
+    const handleClickOutside = (event) => {
+      const path = event.composedPath();
+
+      if (!path.includes(sortRef.current)) {
+        setIsSortVisible(false);
+      }
+    }
+
+    document.body.addEventListener('click', handleClickOutside);
+
+    //unmount
+    return () => document.body.removeEventListener('click', handleClickOutside);
+
+  }, [])
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           className={sortOrder === 'asc' ? 'sort__icon' : 'sort__icon sort__icon-desc'}
