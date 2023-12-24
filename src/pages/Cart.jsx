@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { clearCart } from '../redux/slices/cart/cartSlice';
 import CartItem from '../components/CartItem';
 
 const Cart = () => {
+  const dispatch = useDispatch();
 
   const cartItems = useSelector((state) => state.cart.items);
-  const {sumPrice, sumCount} = useSelector((state) => state.cart);
+  const { sumPrice, sumCount } = useSelector((state) => state.cart);
 
   return (
     <div className="container container--cart">
@@ -44,7 +46,7 @@ const Cart = () => {
             </svg>
             Корзина
           </h2>
-          <div className="cart__clear">
+          <div className="cart__clear" onClick={() => dispatch(clearCart())}>
             <svg
               width="20"
               height="20"
@@ -85,9 +87,9 @@ const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          
-          {cartItems.map((el) => <CartItem {...el} />)}
-
+          {cartItems.map((el) => (
+            <CartItem {...el} />
+          ))}
         </div>
         <div className="cart__bottom">
           <div className="cart__bottom-details">

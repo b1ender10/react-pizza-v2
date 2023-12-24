@@ -14,7 +14,6 @@ function Sort() {
   const sortRef = React.useRef(null);
   const { sortOrder, sortSelected } = useSelector((state) => state.filter);
   const [isSortVisible, setIsSortVisible] = React.useState(false);
-  
 
   const onClickListItem = (val) => {
     dispatch(changeSortSelected(val));
@@ -22,7 +21,6 @@ function Sort() {
   };
 
   React.useEffect(() => {
-
     //mount
     const handleClickOutside = (event) => {
       const path = event.composedPath();
@@ -30,14 +28,13 @@ function Sort() {
       if (!path.includes(sortRef.current)) {
         setIsSortVisible(false);
       }
-    }
+    };
 
     document.body.addEventListener('click', handleClickOutside);
 
     //unmount
     return () => document.body.removeEventListener('click', handleClickOutside);
-
-  }, [])
+  }, []);
 
   return (
     <div ref={sortRef} className="sort">
