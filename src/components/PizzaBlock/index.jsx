@@ -8,13 +8,10 @@ export const typeNames = ['тонкое', 'традиционное'];
 function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
   const dispatch = useDispatch();
 
-  const item = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
-
-  const [pizzaCount, setPizzaCount] = React.useState(0);
   const [activeType, setActiveType] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
-
-  // index Redux = index pizza + active type + active size
+  const indexRedux = String(id) + String(activeType) + String(activeSize);
+  const item = useSelector((state) => state.cart.items.find((obj) => obj.id === indexRedux));
 
   return (
     <div className="pizza-block-wrapper">
@@ -54,7 +51,7 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
             onClick={() => {
               dispatch(
                 addItem({
-                  id: String(id) + String(activeType) + String(activeSize),
+                  id: indexRedux,
                   title,
                   price,
                   imageUrl,
@@ -62,7 +59,6 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
                   type: typeNames[activeType],
                 }),
               );
-              setPizzaCount((prev) => prev + 1);
             }}>
             <svg
               width="12"
@@ -78,7 +74,6 @@ function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
             <span>Добавить</span>
 
             {/* {pizzaCount > 0 && <i>{pizzaCount}</i>} */}
-            {/* {sumCount > 0 && <i>{sumCount}</i>} */}
             {item?.count > 0 && <i>{item.count}</i>}
           </button>
         </div>
