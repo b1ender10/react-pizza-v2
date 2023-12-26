@@ -1,5 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+function updateSum(state) {
+  state.sumCount = state.items.reduce((prev, cur) => (prev += cur.count), 0);
+  state.sumPrice = state.items.reduce((prev, cur) => (prev += cur.count * cur.price), 0);
+}
+
 export const cartSlice = createSlice({
   name: 'cart',
   initialState: {
@@ -7,6 +12,7 @@ export const cartSlice = createSlice({
     sumPrice: 0,
     sumCount: 0,
   },
+
   reducers: {
     addItem: (state, action) => {
       const index = state.items.findIndex((el) => el.id === action.payload.id);
@@ -20,33 +26,25 @@ export const cartSlice = createSlice({
         });
       }
 
-      state.sumCount = state.items.reduce((prev, cur) => (prev += cur.count), 0);
-      state.sumPrice = state.items.reduce((prev, cur) => (prev += cur.count * cur.price), 0);
+      updateSum(state);
     },
     minusItem: (state, action) => {
       const index = state.items.findIndex((el) => el.id === action.payload);
 
       if (index !== -1) {
         state.items[index].count--;
-
         if (state.items[index].count <= 0) {
           state.items = [...state.items.slice(0, index), ...state.items.slice(index + 1)];
         }
       }
 
-      state.sumCount = state.items.reduce((prev, cur) => (prev += cur.count), 0);
-      state.sumPrice = state.items.reduce((prev, cur) => (prev += cur.count * cur.price), 0);
+      updateSum(state);
     },
 
     removeItem: (state, action) => {
       const index = state.items.findIndex((el) => el.id === action.payload);
-
-      console.log(index, state);
-
       state.items = [...state.items.slice(0, index), ...state.items.slice(index + 1)];
-
-      state.sumCount = state.items.reduce((prev, cur) => (prev += cur.count), 0);
-      state.sumPrice = state.items.reduce((prev, cur) => (prev += cur.count * cur.price), 0);
+      updateSum(state);
     },
     clearCart: (state) => {
       state.items = [];

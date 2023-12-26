@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import qs from 'qs';
-import axios from 'axios';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Categories from '../components/Categories';
@@ -10,6 +9,7 @@ import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import { Pagination } from '../components/Pagination';
 import { setFilters } from '../redux/slices/filter/filterSlice';
+import { fetchPizzas } from '../redux/slices/pizza/pizzaSlice';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -19,24 +19,15 @@ const Home = () => {
   const { categorySelected, searchValue, sortSelected, sortOrder, currentPage } = useSelector(
     (state) => state.filter,
   );
+  const { items, status } = useSelector((state) => state.pizza);
 
-  const [items, setItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
-
-  const fetchingData = () => {
-    setIsLoading(true);
-
+  const fetchingData = async () => {
     const category = categorySelected > 0 ? `category=${categorySelected}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
+    const sort = sortSelected.sortProperty;
+    const order = sortOrder + search;
 
-    axios
-      .get(
-        `https://6548a9a8dd8ebcd4ab23590d.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortSelected.sortProperty}&order=${sortOrder}${search}`,
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
+    dispatch(fetchPizzas({ currentPage, category, sort, order }));
   };
 
   // Вытаскиваем параметры из url в redux и предотвращаем повторный запрос на бэкенд
@@ -90,7 +81,7 @@ const Home = () => {
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? skeletons : pizzas}</div>
+      <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
       <Pagination />
     </div>
   );
