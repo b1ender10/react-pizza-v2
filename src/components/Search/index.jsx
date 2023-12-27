@@ -19,11 +19,12 @@ export const Search = () => {
 
   const inputRef = useRef();
 
-  const updateSearchValue = React.useCallback(
-    debounce((str) => {
-      dispatch(changeSearchValue(str));
-    }, 350),
-    [],
+  const updateSearchValue = React.useMemo(
+    () =>
+      debounce((str) => {
+        dispatch(changeSearchValue(str));
+      }, 350),
+    [dispatch],
   );
 
   const onChangeInput = (event) => {
