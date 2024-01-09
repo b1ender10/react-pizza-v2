@@ -8,18 +8,17 @@ import Sort, { sortList } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import { Pagination } from '../components/Pagination';
-import { setFilters } from '../redux/slices/filter/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizza/pizzaSlice';
+import { setFilters, selectorFilter } from '../redux/slices/filter/filterSlice';
+import { fetchPizzas, selectorPizza } from '../redux/slices/pizza/pizzaSlice';
 
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-  const { categorySelected, searchValue, sortSelected, sortOrder, currentPage } = useSelector(
-    (state) => state.filter,
-  );
-  const { items, status } = useSelector((state) => state.pizza);
+  const { categorySelected, searchValue, sortSelected, sortOrder, currentPage } =
+    useSelector(selectorFilter);
+  const { items, status } = useSelector(selectorPizza);
 
   // Вытаскиваем параметры из url в redux и предотвращаем повторный запрос на бэкенд
   React.useEffect(() => {
