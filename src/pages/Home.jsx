@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -70,7 +70,11 @@ const Home = () => {
     isMounted.current = true;
   }, [categorySelected, sortSelected, currentPage, sortOrder, navigate]);
 
-  const pizzas = items.map((object) => <PizzaBlock key={object.id} {...object} />);
+  const pizzas = items.map((object) => (
+    <Link to={'/pizza/' + object.id}>
+      <PizzaBlock key={object.id} {...object} />
+    </Link>
+  ));
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
   return (
@@ -83,7 +87,7 @@ const Home = () => {
 
       {status === 'error' ? (
         <>
-          <div class="content__error">
+          <div className="content__error">
             <h2>
               Ни одной пиццы не найдено <icon>😕</icon>
             </h2>
