@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { clearCart, selectorCart } from '../redux/slices/cart/cartSlice';
 import CartItem from '../components/CartItem';
-import CartEmpty from '../components/CartEmpty';
+import CartEmpty from '../components/CartEmpty.tsx';
 
 const Cart = () => {
   const dispatch = useDispatch();

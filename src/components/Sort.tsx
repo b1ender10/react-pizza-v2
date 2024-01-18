@@ -16,7 +16,7 @@ function Sort() {
   const dispatch = useDispatch();
   const sortRef = React.useRef(null);
   const { sortOrder, sortSelected } = useSelector(selectorFilter);
-  const [isSortVisible, setIsSortVisible] = React.useState(false);
+  const [isSortVisible, setIsSortVisible] = React.useState<boolean>(false);
 
   const onClickListItem = (val) => {
     dispatch(changeSortSelected(val));

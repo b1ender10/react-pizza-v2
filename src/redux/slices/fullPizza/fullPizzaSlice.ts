@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const fetchPizza = createAsyncThunk('fullPizza/fetchPizza', async (id) => {
+export const fetchPizza: any = createAsyncThunk('fullPizza/fetchPizza', async (id : any) => {
   const { data } = await axios.get(`https://6548a9a8dd8ebcd4ab23590d.mockapi.io/items/${id}`);
   return data;
 });

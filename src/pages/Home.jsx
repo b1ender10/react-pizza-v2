@@ -4,7 +4,7 @@ import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Categories from '../components/Categories';
-import Sort, { sortList } from '../components/Sort';
+import Sort, { sortList } from '../components/Sort.tsx';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import { Pagination } from '../components/Pagination';

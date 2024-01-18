@@ -1,12 +1,12 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchPizza } from '../redux/slices/fullPizza/fullPizzaSlice';
+import { fetchPizza } from '../redux/slices/fullPizza/fullPizzaSlice.ts';
 
-const FullPizza = () => {
+const FullPizza: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { item, status } = useSelector((state) => state.fullPizza);
+  const { item, status } = useSelector((state : any) => state.fullPizza);
 
   React.useEffect(() => {
     dispatch(fetchPizza(id));
