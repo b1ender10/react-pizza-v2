@@ -1,21 +1,21 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import qs from 'qs';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Categories from '../components/Categories';
-import Sort, { sortList } from '../components/Sort.tsx';
+import Sort, { sortList } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
-import { Pagination } from '../components/Pagination';
+import Pagination from '../components/Pagination';
 import { setFilters, selectorFilter } from '../redux/slices/filter/filterSlice';
 import { fetchPizzas, selectorPizza } from '../redux/slices/pizza/pizzaSlice';
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isSearch = useRef(false);
-  const isMounted = useRef(false);
+  const isSearch = React.useRef(false);
+  const isMounted = React.useRef(false);
   const { categorySelected, searchValue, sortSelected, sortOrder, currentPage } =
     useSelector(selectorFilter);
   const { items, status } = useSelector(selectorPizza);
@@ -70,7 +70,7 @@ const Home = () => {
     isMounted.current = true;
   }, [categorySelected, sortSelected, currentPage, sortOrder, navigate]);
 
-  const pizzas = items.map((object) => (
+  const pizzas = items.map((object : any) => (
     <Link to={'/pizza/' + object.id}>
       <PizzaBlock key={object.id} {...object} />
     </Link>
@@ -89,7 +89,7 @@ const Home = () => {
         <>
           <div className="content__error">
             <h2>
-              Ни одной пиццы не найдено <icon>😕</icon>
+              Ни одной пиццы не найдено <span>😕</span>
             </h2>
             <p>
               Вероятней всего произошла ошибка.

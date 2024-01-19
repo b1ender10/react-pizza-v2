@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-function updateSum(state) {
-  state.sumCount = state.items.reduce((prev, cur) => (prev += cur.count), 0);
-  state.sumPrice = state.items.reduce((prev, cur) => (prev += cur.count * cur.price), 0);
+function updateSum(state: any) {
+  state.sumCount = state.items.reduce((prev: any, cur: any) => (prev += cur.count), 0);
+  state.sumPrice = state.items.reduce((prev: any, cur: any) => (prev += cur.count * cur.price), 0);
 }
 
 export const cartSlice = createSlice({
@@ -54,9 +54,9 @@ export const cartSlice = createSlice({
   },
 });
 
-export const selectorCart = (state) => state.cart;
-export const selectorCartItemById = (id) => (state) =>
-  state.cart.items.find((obj) => obj.id === id);
+export const selectorCart = (state: any) => state.cart;
+export const selectorCartItemById = (id: any) => (state: any) =>
+  state.cart.items.find((obj: any) => obj.id === id);
 
 // Action creators are generated for each case reducer function
 export const { addItem, minusItem, removeItem, clearCart } = cartSlice.actions;

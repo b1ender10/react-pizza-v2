@@ -5,7 +5,7 @@ import './scss/app.scss';
 import Home from './pages/Home';
 import Cart from './pages/Cart';
 import NotFound from './pages/NotFound';
-import FullPizza from './components/FullPizza.tsx';
+import FullPizza from './components/FullPizza';
 import MainLayout from './layouts/MainLayout';
 
 export const SearchContext = React.createContext('');

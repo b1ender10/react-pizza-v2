@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import filter from './slices/filter/filterSlice';
 import cart from './slices/cart/cartSlice';
 import pizza from './slices/pizza/pizzaSlice';
-import fullPizza from './slices/fullPizza/fullPizzaSlice.ts';
+import fullPizza from './slices/fullPizza/fullPizzaSlice';
 
 export default configureStore({
   reducer: {

@@ -12,20 +12,20 @@ export const sortList = [
   { name: 'алфавиту', sortProperty: 'title' },
 ];
 
-function Sort() {
+const Sort: React.FC = () => {
   const dispatch = useDispatch();
   const sortRef = React.useRef(null);
   const { sortOrder, sortSelected } = useSelector(selectorFilter);
   const [isSortVisible, setIsSortVisible] = React.useState<boolean>(false);
 
-  const onClickListItem = (val) => {
+  const onClickListItem = (val: any) => {
     dispatch(changeSortSelected(val));
     setIsSortVisible(false);
   };
 
   React.useEffect(() => {
     //mount
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       const path = event.composedPath();
 
       if (!path.includes(sortRef.current)) {

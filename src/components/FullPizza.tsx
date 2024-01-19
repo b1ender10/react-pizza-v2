@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchPizza } from '../redux/slices/fullPizza/fullPizzaSlice.ts';
+import { fetchPizza } from '../redux/slices/fullPizza/fullPizzaSlice';
 
 const FullPizza: React.FC = () => {
   const dispatch = useDispatch();
