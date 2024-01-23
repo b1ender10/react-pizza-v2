@@ -6,7 +6,7 @@ import { fetchPizza } from '../redux/slices/fullPizza/fullPizzaSlice';
 const FullPizza: React.FC = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const { item, status } = useSelector((state : any) => state.fullPizza);
+  const { item, status } = useSelector((state: any) => state.fullPizza);
 
   React.useEffect(() => {
     dispatch(fetchPizza(id));

@@ -4,28 +4,28 @@ import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
 import { changeSearchValue } from '../../redux/slices/filter/filterSlice';
 
-const debounce = (fn: any, t: any) => {
-  let timer: any;
+const debounce = (fn: (...args: any) => void, t: number) => {
+  let timer: string | number | NodeJS.Timeout;
   return function (...args: any) {
     clearTimeout(timer);
     timer = setTimeout(() => fn(...args), t);
   };
 };
 
-const Search:React.FC = () => {
-  const [value, setValue] = React.useState('');
+const Search: React.FC = () => {
   const dispatch = useDispatch();
+  const [value, setValue] = React.useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
   const updateSearchValue = React.useMemo(
     () =>
-      debounce((str: any) => {
-        dispatch(changeSearchValue(str));
+      debounce((searchValue: string) => {
+        dispatch(changeSearchValue(searchValue));
       }, 350),
     [dispatch],
   );
 
-  const onChangeInput = (event: any) => {
+  const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };

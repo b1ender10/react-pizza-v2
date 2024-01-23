@@ -6,7 +6,13 @@ import {
   changeSortOrder,
   selectorFilter,
 } from '../redux/slices/filter/filterSlice';
-export const sortList = [
+
+type sortItem = {
+  name: string;
+  sortProperty: string;
+};
+
+export const sortList: sortItem[] = [
   { name: 'популярности', sortProperty: 'rating' },
   { name: 'цене', sortProperty: 'price' },
   { name: 'алфавиту', sortProperty: 'title' },
@@ -16,9 +22,9 @@ const Sort: React.FC = () => {
   const dispatch = useDispatch();
   const sortRef = React.useRef(null);
   const { sortOrder, sortSelected } = useSelector(selectorFilter);
-  const [isSortVisible, setIsSortVisible] = React.useState<boolean>(false);
+  const [isSortVisible, setIsSortVisible] = React.useState(false);
 
-  const onClickListItem = (val: any) => {
+  const onClickListItem = (val: sortItem) => {
     dispatch(changeSortSelected(val));
     setIsSortVisible(false);
   };
@@ -68,6 +74,7 @@ const Sort: React.FC = () => {
             {sortList.map((obj, index) => {
               return (
                 <li
+                  key={index}
                   onClick={() => {
                     onClickListItem(obj);
                   }}
@@ -81,6 +88,6 @@ const Sort: React.FC = () => {
       )}
     </div>
   );
-}
+};
 
 export default Sort;

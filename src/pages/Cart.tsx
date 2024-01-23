@@ -8,7 +8,6 @@ import CartEmpty from '../components/CartEmpty';
 
 const Cart: React.FC = () => {
   const dispatch = useDispatch();
-
   const { sumPrice, sumCount, items } = useSelector(selectorCart);
 
   if (!sumCount) {

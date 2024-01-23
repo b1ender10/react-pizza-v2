@@ -8,7 +8,7 @@ import Sort, { sortList } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { setFilters, selectorFilter } from '../redux/slices/filter/filterSlice';
+import { setFilters, selectorFilter, changeCurrentPage } from '../redux/slices/filter/filterSlice';
 import { fetchPizzas, selectorPizza } from '../redux/slices/pizza/pizzaSlice';
 
 const Home: React.FC = () => {
@@ -16,9 +16,14 @@ const Home: React.FC = () => {
   const dispatch = useDispatch();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
+
   const { categorySelected, searchValue, sortSelected, sortOrder, currentPage } =
     useSelector(selectorFilter);
   const { items, status } = useSelector(selectorPizza);
+
+  const onChangePage = (page: number) => {
+    dispatch(changeCurrentPage(page));
+  };
 
   // Вытаскиваем параметры из url в redux и предотвращаем повторный запрос на бэкенд
   React.useEffect(() => {
@@ -70,9 +75,9 @@ const Home: React.FC = () => {
     isMounted.current = true;
   }, [categorySelected, sortSelected, currentPage, sortOrder, navigate]);
 
-  const pizzas = items.map((object : any) => (
-    <Link to={'/pizza/' + object.id}>
-      <PizzaBlock key={object.id} {...object} />
+  const pizzas = items.map((object: any) => (
+    <Link to={'/pizza/' + object.id} key={object.id}>
+      <PizzaBlock {...object} />
     </Link>
   ));
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
@@ -102,7 +107,7 @@ const Home: React.FC = () => {
         <div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
       )}
 
-      <Pagination />
+      <Pagination onChangePage={onChangePage} />
     </div>
   );
 };

@@ -26,6 +26,6 @@ const Categories: React.FC = () => {
       </ul>
     </div>
   );
-}
+};
 
 export default Categories;
