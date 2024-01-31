@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { SortOrderType } from '../redux/slices/filter/filterSlice';
 
 import {
   changeSortSelected,
@@ -49,9 +50,10 @@ const Sort: React.FC = () => {
     <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
-          className={sortOrder === 'asc' ? 'sort__icon' : 'sort__icon sort__icon-desc'}
+          className={sortOrder === SortOrderType.asc ? 'sort__icon' : 'sort__icon sort__icon-desc'}
           onClick={() => {
-            const tempOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+            const tempOrder =
+              sortOrder === SortOrderType.asc ? SortOrderType.desc : SortOrderType.asc;
             dispatch(changeSortOrder(tempOrder));
           }}
           width="10"

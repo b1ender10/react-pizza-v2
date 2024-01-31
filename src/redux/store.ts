@@ -4,7 +4,7 @@ import cart from './slices/cart/cartSlice';
 import pizza from './slices/pizza/pizzaSlice';
 import fullPizza from './slices/fullPizza/fullPizzaSlice';
 
-export default configureStore({
+const rootReducer = configureStore({
   reducer: {
     filter,
     cart,
@@ -12,3 +12,7 @@ export default configureStore({
     fullPizza,
   },
 });
+
+export default rootReducer;
+
+export type RootState = ReturnType<typeof rootReducer.getState>
