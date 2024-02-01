@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { RootState } from '../../store';
 
@@ -20,13 +20,13 @@ type FullPizzaState = {
   status: StatusType,
 }
 
-const initialState = {
-  item: {},
-  status: 'loading', // loading, success, error
-} as FullPizzaState;
+const initialState: FullPizzaState = {
+  item: null,
+  status: StatusType.loading,
+};
 
-export const fetchPizza = createAsyncThunk('fullPizza/fetchPizza', async (id : string) => {
-  const { data } = await axios.get(`https://6548a9a8dd8ebcd4ab23590d.mockapi.io/items/${id}`);
+export const fetchPizza = createAsyncThunk<FullPizzaType, string>('fullPizza/fetchPizza', async (id ) => {
+  const { data } = await axios.get<FullPizzaType>(`https://6548a9a8dd8ebcd4ab23590d.mockapi.io/items/${id}`);
   return data;
 });
 
@@ -35,15 +35,15 @@ export const fullPizzaSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchPizza.pending, (state, action) => {
+    builder.addCase(fetchPizza.pending, (state) => {
       state.item = {} as FullPizzaType;
       state.status = StatusType.loading;
     });
-    builder.addCase(fetchPizza.fulfilled, (state, action) => {
+    builder.addCase(fetchPizza.fulfilled, (state, action: PayloadAction<FullPizzaType>) => {
       state.item = action.payload;
       state.status = StatusType.success;
     });
-    builder.addCase(fetchPizza.rejected, (state, action) => {
+    builder.addCase(fetchPizza.rejected, (state) => {
       state.item = {} as FullPizzaType;
       state.status = StatusType.error;
     });

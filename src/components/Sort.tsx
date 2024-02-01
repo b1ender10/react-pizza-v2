@@ -1,6 +1,10 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { SortOrderType } from '../redux/slices/filter/filterSlice';
+import {
+  SortOrderOptions,
+  SortPropertyOptions,
+  SortSelectedType,
+} from '../redux/slices/filter/filterSlice';
 
 import {
   changeSortSelected,
@@ -8,15 +12,10 @@ import {
   selectorFilter,
 } from '../redux/slices/filter/filterSlice';
 
-type sortItem = {
-  name: string;
-  sortProperty: string;
-};
-
-export const sortList: sortItem[] = [
-  { name: 'популярности', sortProperty: 'rating' },
-  { name: 'цене', sortProperty: 'price' },
-  { name: 'алфавиту', sortProperty: 'title' },
+export const sortList: SortSelectedType[] = [
+  { name: 'популярности', sortProperty: SortPropertyOptions.rating },
+  { name: 'цене', sortProperty: SortPropertyOptions.price },
+  { name: 'алфавиту', sortProperty: SortPropertyOptions.title },
 ];
 
 const Sort: React.FC = () => {
@@ -25,7 +24,7 @@ const Sort: React.FC = () => {
   const { sortOrder, sortSelected } = useSelector(selectorFilter);
   const [isSortVisible, setIsSortVisible] = React.useState(false);
 
-  const onClickListItem = (val: sortItem) => {
+  const onClickListItem = (val: SortSelectedType) => {
     dispatch(changeSortSelected(val));
     setIsSortVisible(false);
   };
@@ -50,10 +49,12 @@ const Sort: React.FC = () => {
     <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
-          className={sortOrder === SortOrderType.asc ? 'sort__icon' : 'sort__icon sort__icon-desc'}
+          className={
+            sortOrder === SortOrderOptions.asc ? 'sort__icon' : 'sort__icon sort__icon-desc'
+          }
           onClick={() => {
             const tempOrder =
-              sortOrder === SortOrderType.asc ? SortOrderType.desc : SortOrderType.asc;
+              sortOrder === SortOrderOptions.asc ? SortOrderOptions.desc : SortOrderOptions.asc;
             dispatch(changeSortOrder(tempOrder));
           }}
           width="10"

@@ -8,7 +8,12 @@ import Sort, { sortList } from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import Pagination from '../components/Pagination';
-import { setFilters, selectorFilter, changeCurrentPage } from '../redux/slices/filter/filterSlice';
+import {
+  setFilters,
+  selectorFilter,
+  changeCurrentPage,
+  SortOrderOptions,
+} from '../redux/slices/filter/filterSlice';
 import { fetchPizzas, selectorPizza } from '../redux/slices/pizza/pizzaSlice';
 import { useAppDispatch } from '../redux/store';
 
@@ -35,8 +40,11 @@ const Home: React.FC = () => {
 
       dispatch(
         setFilters({
-          ...params,
-          sort,
+          currentPage: Number(params.currentPage),
+          categorySelected: Number(params.category),
+          searchValue: params.search as string,
+          sortSelected: sort,
+          sortOrder: params.sortOrder === 'desc' ? SortOrderOptions.desc : SortOrderOptions.asc,
         }),
       );
       isSearch.current = true;

@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../store';
 
-type CartItem = {
+export type CartItem = {
   id: string,
   title: string,
   price: number,
@@ -17,11 +17,11 @@ type CartState = {
   sumCount: number,
 }
 
-const initialState = {
+const initialState: CartState = {
   items: [],
   sumPrice: 0,
   sumCount: 0,
-} as CartState;
+};
 
 function updateSum(state: CartState) {
   state.sumCount = state.items.reduce((prev: number, cur: CartItem) => (prev += cur.count), 0);
@@ -32,7 +32,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<any>) => {
+    addItem: (state, action: PayloadAction<CartItem>) => {
       const index = state.items.findIndex((el) => el.id === action.payload.id);
 
       if (index !== -1) {
