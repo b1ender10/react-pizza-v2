@@ -1,27 +1,28 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { fetchPizza } from '../redux/slices/fullPizza/fullPizzaSlice';
+import { fetchPizza, selectorFullPizza } from '../redux/slices/fullPizza/fullPizzaSlice';
+import { useAppDispatch } from '../redux/store';
+// import { RootState } from '../redux/store';
+import { StatusType } from '../redux/slices/fullPizza/fullPizzaSlice';
 
 const FullPizza: React.FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { id } = useParams();
-  const { item, status } = useSelector((state: any) => state.fullPizza);
+  const { item, status } = useSelector(selectorFullPizza);
 
   React.useEffect(() => {
     dispatch(fetchPizza(id));
   }, [dispatch, id]);
 
-  if (status === 'loading') {
-    return <div className="container">Loading...</div>;
+  if (status === StatusType.loading) {
+    return <div className="container">Загрузка...</div>;
   }
 
   return (
     <div className="container">
-      {status === 'error' ? (
+      {status === StatusType.error ? (
         'Такой пиццы не сущесвует :('
-      ) : status === 'loading' ? (
-        'Загрузка...'
       ) : (
         <>
           <img src={item.imageUrl} alt="Пицца" />

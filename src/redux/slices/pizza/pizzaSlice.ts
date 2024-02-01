@@ -4,8 +4,19 @@ import { RootState } from '../../store';
 
 enum StatusType {loading = 'loading', success = 'success', error = 'error'};
 
+type PizzaItem = {
+  id: string,
+  imageUrl: string,
+  title: string,
+  types: number[],
+  sizes: number[],
+  price: number,
+  category: number,
+  rating: number,
+}
+
 type PizzaState = {
-  items: any[],
+  items: PizzaItem[],
   status: StatusType,
 } 
 
@@ -14,8 +25,8 @@ const initialState = {
   status: 'loading',
 } as PizzaState;
 
-export const fetchPizzas: any = createAsyncThunk('pizza/fetchPizzas', async (params) => {
-  const { currentPage, category, sort, order } : any = params;
+export const fetchPizzas = createAsyncThunk('pizza/fetchPizzas', async (params : any) => {
+  const { currentPage, category, sort, order } = params;
 
   const { data } = await axios.get(
     `https://6548a9a8dd8ebcd4ab23590d.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sort}&order=${order}`,
