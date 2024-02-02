@@ -90,7 +90,7 @@ const Cart: React.FC = () => {
           </div>
         </div>
         <div className="content__items">
-          {items.map((el: any) => (
+          {items.map((el) => (
             <CartItem {...el} />
           ))}
         </div>

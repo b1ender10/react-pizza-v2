@@ -31,7 +31,7 @@ const Sort: React.FC = () => {
 
   React.useEffect(() => {
     //mount
-    const handleClickOutside = (event: any) => {
+    const handleClickOutside = (event: MouseEvent) => {
       const path = event.composedPath();
 
       if (!path.includes(sortRef.current)) {

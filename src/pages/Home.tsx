@@ -84,7 +84,7 @@ const Home: React.FC = () => {
     isMounted.current = true;
   }, [categorySelected, sortSelected, currentPage, sortOrder, navigate]);
 
-  const pizzas = items.map((object: any) => <PizzaBlock {...object} key={object.id} />);
+  const pizzas = items.map((object) => <PizzaBlock {...object} key={object.id} />);
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
   return (
