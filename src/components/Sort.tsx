@@ -34,10 +34,8 @@ const Sort: React.FC = () => {
     const handleClickOutside = (event: MouseEvent) => {
       const path = event.composedPath();
 
-      if (true) {
-        //do some code
-        console.log('test');
-        console.log(path);
+      if (!path.includes(sortRef.current)) {
+        setIsSortVisible(false);
       }
     };
 
@@ -46,6 +44,8 @@ const Sort: React.FC = () => {
     //unmount
     return () => document.body.removeEventListener('click', handleClickOutside);
   }, []);
+
+  console.log('test debug');
 
   return (
     <div ref={sortRef} className="sort">
