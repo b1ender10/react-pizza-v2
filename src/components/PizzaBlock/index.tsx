@@ -17,9 +17,9 @@ type PizzaBlockProps = {
 const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types }) => {
   const dispatch = useDispatch();
 
-  const [activeType, setActiveType] = React.useState(0);
+  const [activeType1, setActiveType1] = React.useState(0);
   const [activeSize, setActiveSize] = React.useState(0);
-  const indexRedux = String(id) + String(activeType) + String(activeSize);
+  const indexRedux = String(id) + String(activeType1) + String(activeSize);
   const item = useSelector(selectorCartItemById(indexRedux));
 
   return (
@@ -35,8 +35,8 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, siz
               return (
                 <li
                   key={index}
-                  onClick={() => setActiveType(index)}
-                  className={activeType === index ? 'active' : ''}>
+                  onClick={() => setActiveType1(index)}
+                  className={activeType1 === index ? 'active' : ''}>
                   {typeNames[type]}
                 </li>
               ); //className="active"
@@ -67,7 +67,7 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, siz
                   price,
                   imageUrl,
                   size: sizes[activeSize],
-                  type: typeNames[activeType],
+                  type: typeNames[activeType1],
                   count: 0,
                 }),
               );
