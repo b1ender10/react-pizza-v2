@@ -23,7 +23,6 @@ const CartItemBlock: React.FC<CartItemProps> = ({
   count,
 }) => {
   const dispatch = useDispatch();
-  console.log('test');
 
   return (
     <div className="cart__item">
