@@ -45,6 +45,8 @@ const Sort: React.FC = () => {
     return () => document.body.removeEventListener('click', handleClickOutside);
   }, []);
 
+  console.log('test debug');
+
   return (
     <div ref={sortRef} className="sort">
       <div className="sort__label">
