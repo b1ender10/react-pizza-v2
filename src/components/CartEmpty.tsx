@@ -18,6 +18,7 @@ const CartEmpty: React.FC = () => {
       <Link to="/" className="button button--black">
         <span>Вернуться назад</span>
       </Link>
+      <div>test add text</div>
     </div>
   );
 };
