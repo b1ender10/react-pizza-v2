@@ -93,7 +93,7 @@ const Home: React.FC = () => {
         <Categories />
         <Sort />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
+      <h2 className="content__title">Пиццы в наличии</h2>
 
       {status === 'error' ? (
         <>
